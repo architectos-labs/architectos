@@ -1,45 +1,62 @@
 package com.architectureoslabs.engine.analyzer;
 
 
-import com.architectureoslabs.engine.model.SoftwareComponent;
+import com.architectureoslabs.engine.model.ParsedJavaFile;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
+
 /**
- * Tests for RepositoryAnalyzer.
+ * Tests RepositoryAnalyzer behavior.
  */
 public class RepositoryAnalyzerTest {
 
 
     @Test
-    void shouldAnalyzeRepository() {
+    void shouldAnalyzeJavaRepository() {
 
 
         RepositoryAnalyzer analyzer =
                 new RepositoryAnalyzer();
 
 
-        SoftwareComponent component =
+        String sourceCode = """
+
+                import com.company.repository.PaymentRepository;
+
+
+                public class PaymentService {
+
+                }
+
+                """;
+
+
+        ParsedJavaFile result =
                 analyzer.analyze(
-                        "test-repository"
+                        sourceCode
                 );
 
 
-        assertNotNull(component);
+        assertNotNull(result);
+
 
         assertEquals(
-                "test-repository",
-                component.getName()
+                "PaymentService",
+                result.getComponent()
+                        .getName()
         );
 
 
         assertEquals(
-                "repository",
-                component.getType()
+                1,
+                result.getDependencies()
+                        .size()
         );
+
     }
 
 }
