@@ -30,10 +30,10 @@ The initial architecture focuses on static analysis capabilities with future exp
     +---------------+---------------+
     |               |               |
     v               v               v
-+-------------+ +-------------+ +-------------+
-| Parser      | | Dependency  | | Rule Engine |
-| Engine      | | Analyzer    | |             |
-+-------------+ +-------------+ +-------------+
+    +-------------+ +-------------+ +-------------+
+    | Parser      | | Dependency  | | Rule Engine |
+    | Engine      | | Analyzer    | |             |
+    +-------------+ +-------------+ +-------------+
                     |
                     v
             +---------------+
@@ -107,13 +107,7 @@ Initial rules:
 Detect dependency cycles.
 
 Example:
-Service A
-|
-v
-Service B
-|
-v
-Service A
+Service A -> Service B -> Service A
 
 ---
 
@@ -122,10 +116,7 @@ Service A
 Detect incorrect dependency direction.
 
 Example:
-Controller
-|
-v
-Repository
+Controller -> Repository
 
 ---
 
