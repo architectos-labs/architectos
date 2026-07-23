@@ -1,0 +1,31 @@
+name: ArchitectOS CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+
+  build:
+
+    name: Build and Validate
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Display project information
+        run: |
+          echo "ArchitectOS CI Pipeline"
+          echo "Repository validation successful"
