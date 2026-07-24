@@ -7,6 +7,12 @@ package com.architectureoslabs.engine.rules;
 public class RuleResult {
 
 
+    private final String ruleName;
+
+
+    private final String severity;
+
+
     private final boolean violated;
 
 
@@ -15,12 +21,32 @@ public class RuleResult {
 
 
     public RuleResult(
+            String ruleName,
+            String severity,
             boolean violated,
             String message
     ) {
 
+        this.ruleName = ruleName;
+        this.severity = severity;
         this.violated = violated;
         this.message = message;
+
+    }
+
+
+
+    public String getRuleName() {
+
+        return ruleName;
+
+    }
+
+
+
+    public String getSeverity() {
+
+        return severity;
 
     }
 
@@ -39,5 +65,6 @@ public class RuleResult {
         return message;
 
     }
+
 
 }
