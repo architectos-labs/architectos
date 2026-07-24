@@ -1,32 +1,25 @@
 package com.architectureoslabs.engine.analyzer;
 
-
-import com.architectureoslabs.engine.model.ParsedJavaFile;
-
+import com.architectureoslabs.engine.model.ArchitectureGraph;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
 
 /**
  * Tests RepositoryAnalyzer behavior.
  */
 public class RepositoryAnalyzerTest {
 
-
     @Test
-    void shouldAnalyzeJavaRepository() {
-
+    void shouldBuildArchitectureGraph() {
 
         RepositoryAnalyzer analyzer =
                 new RepositoryAnalyzer();
 
-
         String sourceCode = """
 
                 import com.company.repository.PaymentRepository;
-
+                import com.company.user.UserService;
 
                 public class PaymentService {
 
@@ -34,29 +27,27 @@ public class RepositoryAnalyzerTest {
 
                 """;
 
+        ArchitectureGraph graph =
+                analyzer.analyze(sourceCode);
 
-        ParsedJavaFile result =
-                analyzer.analyze(
-                        sourceCode
-                );
-
-
-        assertNotNull(result);
-
-
-        assertEquals(
-                "PaymentService",
-                result.getComponent()
-                        .getName()
-        );
-
+        assertNotNull(graph);
 
         assertEquals(
                 1,
-                result.getDependencies()
-                        .size()
+                graph.getComponents().size()
         );
 
+        assertEquals(
+                2,
+                graph.getDependencies().size()
+        );
+
+        assertEquals(
+                "PaymentService",
+                graph.getComponents()
+                        .get(0)
+                        .getName()
+        );
     }
 
 }
