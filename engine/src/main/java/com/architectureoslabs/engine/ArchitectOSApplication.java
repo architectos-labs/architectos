@@ -9,29 +9,10 @@ import com.architectureoslabs.engine.rules.RuleResult;
 
 
 
-/**
- * Main entry point for ArchitectOS Analysis Engine.
- */
 public class ArchitectOSApplication {
 
 
     public static void main(String[] args) {
-
-
-        System.out.println(
-                "================================="
-        );
-
-
-        System.out.println(
-                "ArchitectOS Analysis Engine"
-        );
-
-
-        System.out.println(
-                "================================="
-        );
-
 
 
         RepositoryAnalyzer analyzer =
@@ -42,7 +23,6 @@ public class ArchitectOSApplication {
         String sourceCode = """
 
                 import com.company.user.UserService;
-
 
                 public class PaymentService {
 
@@ -59,69 +39,53 @@ public class ArchitectOSApplication {
 
 
 
-        ArchitectureRuleEngine ruleEngine =
+        ArchitectureRuleEngine engine =
                 new ArchitectureRuleEngine();
 
 
 
-        ruleEngine.registerRule(
+        engine.registerRule(
                 new CircularDependencyRule()
         );
 
 
 
-        System.out.println();
-
         System.out.println(
-                "Architecture Components:"
-        );
-
-
-        graph.getComponents()
-                .forEach(
-                        System.out::println
-                );
-
-
-
-        System.out.println();
-
-        System.out.println(
-                "Dependencies:"
-        );
-
-
-        graph.getDependencies()
-                .forEach(
-                        System.out::println
-                );
-
-
-
-        System.out.println();
-
-        System.out.println(
-                "Architecture Analysis:"
+                "ArchitectOS Report"
         );
 
 
 
         for (RuleResult result :
-                ruleEngine.analyze(graph)) {
+                engine.analyze(graph)) {
 
 
             System.out.println(
-                    result.getMessage()
+                    "Rule: "
+                            + result.getRuleName()
+            );
+
+
+            System.out.println(
+                    "Severity: "
+                            + result.getSeverity()
+            );
+
+
+            System.out.println(
+                    "Status: "
+                            + (result.isViolated()
+                            ? "FAILED"
+                            : "PASSED")
+            );
+
+
+            System.out.println(
+                    "Message: "
+                            + result.getMessage()
             );
 
         }
-
-
-        System.out.println();
-
-        System.out.println(
-                "Analysis Completed"
-        );
 
     }
 
