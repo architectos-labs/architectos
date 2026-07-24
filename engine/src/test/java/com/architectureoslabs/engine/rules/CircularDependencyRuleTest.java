@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-/**
- * Tests circular dependency detection.
- */
 public class CircularDependencyRuleTest {
 
 
@@ -23,7 +20,6 @@ public class CircularDependencyRuleTest {
                 new ArchitectureGraph();
 
 
-
         graph.addDependency(
                 new Dependency(
                         "UserService",
@@ -32,14 +28,12 @@ public class CircularDependencyRuleTest {
         );
 
 
-
         graph.addDependency(
                 new Dependency(
                         "AccountService",
                         "UserService"
                 )
         );
-
 
 
         CircularDependencyRule rule =
@@ -57,11 +51,15 @@ public class CircularDependencyRuleTest {
         );
 
 
-        assertTrue(
-                result.getMessage()
-                        .contains(
-                                "Circular dependency"
-                        )
+        assertEquals(
+                "CircularDependencyRule",
+                result.getRuleName()
+        );
+
+
+        assertEquals(
+                "HIGH",
+                result.getSeverity()
         );
 
     }
